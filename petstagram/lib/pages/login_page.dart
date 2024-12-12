@@ -24,6 +24,12 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body : SafeArea(child: Container(
+        decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/images/bg.jpg"),
+              fit: BoxFit.cover,
+            ),
+          ),
         padding: const EdgeInsets.symmetric(horizontal: 32),
         width: double.infinity,
         child: Column(
@@ -73,12 +79,12 @@ class _LoginPageState extends State<LoginPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    child: const Text("Don't have an account? "),
+                    child: const Text("Don't have an account? ",  style: TextStyle(color: Colors.black)),
                     padding: const EdgeInsets.symmetric(vertical: 8,),
                   ),
                   GestureDetector( onTap: (){},
                     child: Container(
-                      child: const Text("Sign up.", style: TextStyle(fontWeight: FontWeight.bold),),
+                      child: const Text("Sign up.", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),),
                       padding: const EdgeInsets.symmetric(vertical: 8,),
                   ),),
                 
