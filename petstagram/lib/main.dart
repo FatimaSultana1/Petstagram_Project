@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:petstagram/pages/login_page.dart';
 import 'package:petstagram/pages/login_page.dart';
 import 'package:petstagram/pages/signup_page.dart';
+import 'package:petstagram/providers/user_provider.dart';
 import 'package:petstagram/responses/mobile_screen.dart';
 import 'package:petstagram/responses/reponsive_layout.dart';
 import 'package:petstagram/responses/web_screen.dart';
 import 'package:petstagram/utils/colors.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,7 +34,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider( create: (_) => UserProvider(),),
+      ],
+      child: MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Petstagram',
       theme: ThemeData.dark().copyWith(
@@ -58,6 +64,6 @@ class MyApp extends StatelessWidget {
       },
       ),
   
-    );
+    ));
   }
 }
