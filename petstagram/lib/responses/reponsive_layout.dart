@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:petstagram/providers/user_provider.dart';
-import 'package:petstagram/utils/dimensions.dart';
+import 'package:petstagram/utils/global_vars.dart';
 import 'package:provider/provider.dart';
 
 
