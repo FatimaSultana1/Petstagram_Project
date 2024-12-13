@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:petstagram/providers/user_provider.dart';
+import 'package:petstagram/resources/firestore_methods.dart';
 import 'package:petstagram/utils/colors.dart';
 import 'package:petstagram/utils/utils.dart';
 import 'package:provider/provider.dart';
@@ -20,7 +21,31 @@ class _AddPostPageState extends State<AddPostPage> {
 
   Uint8List? _file;
   final TextEditingController _descriptionController = TextEditingController();
-
+  bool _isLoading = false;
+  void postImage(String uid,   String username,    String profImage,) async {
+    setState(() {
+      _isLoading= true;
+    });
+    try{
+      String res = await FirestoreMethods().uploadPost(_descriptionController.text, _file!, uid, username, profImage,);
+        if(res == "success"){
+          setState(() {
+          _isLoading= false;
+        });
+        clearImage();
+        showSnackBar('Posted!', context);
+      }
+      else{
+        setState(() {
+        _isLoading= false;
+      });
+        showSnackBar(res, context);
+      }
+    }
+    catch(e){
+        showSnackBar(e.toString(), context);
+    }
+  }
   _selectImage(BuildContext contex) async{
     return showDialog(context: context, builder: (contex){
       return SimpleDialog(
@@ -55,14 +80,26 @@ class _AddPostPageState extends State<AddPostPage> {
           SimpleDialogOption(
             padding: const EdgeInsets.all(20),
             child: const Text('Cancel') ,
-            onPressed: () {
+            onPressed: ()  {
               Navigator.of(context).pop();
+              
             },
           ),
 
         ],
       );
     });
+  }
+  void clearImage() {
+    setState(() {
+      _file = null;
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _descriptionController.dispose();
   }
 
   @override
@@ -83,13 +120,14 @@ class _AddPostPageState extends State<AddPostPage> {
         backgroundColor: mobileBackgroundColor,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () {},
+          onPressed: clearImage,
           
           ),
           title: const  Text('Post to'),
           centerTitle: false,
           actions: [
-            TextButton(onPressed: (){}, child: const Text('Post', style: TextStyle(
+            TextButton(onPressed: () => postImage(user.uid,user.username,user.photoUrl),
+             child: const Text('Post', style: TextStyle(
               color: Colors.blueAccent,
               fontWeight: FontWeight.bold,
               fontSize: 16,
@@ -100,6 +138,7 @@ class _AddPostPageState extends State<AddPostPage> {
 
       body: Column(
         children: [
+          _isLoading? const LinearProgressIndicator(): const Padding(padding: EdgeInsets.only(top:0)), const Divider(), 
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround ,
             crossAxisAlignment: CrossAxisAlignment.start,
