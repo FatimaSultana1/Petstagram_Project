@@ -1,11 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-// import 'package:petstagram/pages/login_page.dart';
+import 'package:petstagram/pages/login_page.dart';
+import 'package:petstagram/pages/login_page.dart';
 import 'package:petstagram/pages/signup_page.dart';
-// import 'package:petstagram/responses/mobile_screen.dart';
-// import 'package:petstagram/responses/reponsive_layout.dart';
-// import 'package:petstagram/responses/web_screen.dart';
+import 'package:petstagram/responses/mobile_screen.dart';
+import 'package:petstagram/responses/reponsive_layout.dart';
+import 'package:petstagram/responses/web_screen.dart';
 import 'package:petstagram/utils/colors.dart';
 
 void main() async {
@@ -15,7 +17,7 @@ void main() async {
         appId: '1:784000467297:web:707c7f21c65192ce850520', 
         messagingSenderId: '784000467297', projectId: 'petinsta-d2f1a',
         storageBucket: 'petinsta-d2f1a.firebasestorage.app'));
-
+ 
  
   }
   else{
@@ -35,8 +37,26 @@ class MyApp extends StatelessWidget {
       title: 'Petstagram',
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: mobileBackgroundColor) ,
-      // home: const ResponsiveLayout(webScreenLayout: WebScreenLayout(), mobileScreenLayout: MobileScreenLayout()),
-      home : const SignUpPage(),
+      home : StreamBuilder(stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot){
+        if(snapshot.connectionState == ConnectionState.active){
+          if(snapshot.hasData){
+             return const ResponsiveLayout(webScreenLayout: WebScreenLayout(), mobileScreenLayout: MobileScreenLayout());
+          }else if(snapshot.hasError){
+            return Center(
+              child : Text('${snapshot.error}'),
+            );
+          }
+        }
+
+        if(snapshot.connectionState == ConnectionState.waiting){
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        return const LoginPage();
+
+      },
+      ),
   
     );
   }

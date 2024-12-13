@@ -6,7 +6,13 @@ pickImage(ImageSource source) async{
 
   XFile? _file = await  _imagePicker.pickImage(source: source);
   if(_file != null){
-    return await File(_file.path);
+    return await _file.readAsBytes();//File(_file.path);
   }
   print('No image selected');
+}
+
+showSnackBar (String content, BuildContext context){
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(content: Text(content),),
+  );
 }

@@ -2,10 +2,15 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:petstagram/pages/login_page.dart';
 import 'package:petstagram/resources/auth_methods.dart';
+import 'package:petstagram/responses/mobile_screen.dart';
+import 'package:petstagram/responses/web_screen.dart';
 import 'package:petstagram/utils/utils.dart';
 // import 'package:petstagram/utils/colors.dart';
 import 'package:petstagram/widgets/text_field_input.dart';
+
+import '../responses/reponsive_layout.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -20,6 +25,7 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _bioController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   Uint8List? _image;
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -37,6 +43,38 @@ class _SignUpPageState extends State<SignUpPage> {
      _image = im;
    });
   }
+
+  void signUpUser() async{
+    setState(() {
+      _isLoading = true;
+    });
+    String res = await AuthMethods().signUpUser(
+                      email: _emailController.text, 
+                      password: _passwordController.text, 
+                      username: _usernameController.text, 
+                      bio: _bioController.text,
+                      file: _image!,);
+              
+                      print(res); 
+                    
+                setState(() {_isLoading = false;});
+
+                  if( res != 'success' ){
+                      showSnackBar(res, context);
+                  }else{
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) =>  
+                         const ResponsiveLayout(
+                          webScreenLayout: WebScreenLayout(),
+                           mobileScreenLayout: MobileScreenLayout())
+ ));
+
+                  }
+  }
+
+    void navigateToLogin() async{
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const LoginPage()));
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -58,16 +96,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 flex: 1,
                 child: Container(),
               ),
-              // const SizedBox(height: 64),
-              // const Text(
-              //   'Petstagram',
-              //   style: TextStyle(
-              //     fontFamily: 'Algerian',
-              //     fontSize: 42,
-              //     fontWeight: FontWeight.bold,
-              //     color: Color.fromARGB(255, 207, 69, 74)
-              //   ),
-              // ),
+              
               Image.asset(
                 'assets/images/pet.png',
                 width: 180, // Adjust width
@@ -92,18 +121,10 @@ class _SignUpPageState extends State<SignUpPage> {
               const SizedBox(height: 20,),
               
               InkWell(
-                onTap: () async {
-                    String res = await AuthMethods().signUpUser(
-                      email: _emailController.text, 
-                      password: _passwordController.text, 
-                      username: _usernameController.text, 
-                      bio: _bioController.text,
-                      file: _image!,);
-              
-                      print(res);
-                }, 
+                onTap: signUpUser,
                 child: Container(
-                  child: const Text('Sign up'), 
+                  
+                  child:_isLoading ? Center(child: CircularProgressIndicator(),) : const Text('Sign up'), 
                   width: double.infinity,
                   alignment: Alignment.center,
                   padding: const EdgeInsets.symmetric(vertical: 12),
@@ -123,7 +144,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     padding: const EdgeInsets.symmetric(vertical: 8,),
                     
                   ),
-                  GestureDetector( onTap: (){},
+                  GestureDetector( onTap: navigateToLogin,
                     child: Container(
                       child: const Text("Log In.", style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black ),),
                       padding: const EdgeInsets.symmetric(vertical: 8,),

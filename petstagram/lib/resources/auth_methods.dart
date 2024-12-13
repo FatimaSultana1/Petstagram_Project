@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:petstagram/resources/storage_methods.dart';
 
 class AuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -17,9 +18,11 @@ class AuthMethods {
   }) async{
     String res = "Some error occured";
     try{
-      if(email.isNotEmpty || password.isNotEmpty || username.isNotEmpty || bio.isNotEmpty){ // || file != null ){
+      if(email.isNotEmpty || password.isNotEmpty || username.isNotEmpty || bio.isNotEmpty  || file != null ){
         UserCredential cred = await _auth.createUserWithEmailAndPassword(email: email, password: password);
         print(cred.user!.uid);
+
+        String photoUrl = await StorageMethods().uploadImageToStorage('profilePics', file, false);
 
         await _firestore.collection('users').doc(cred.user!.uid).set({
            'username': username,
@@ -28,13 +31,41 @@ class AuthMethods {
            'bio': bio,
            'followers': [],
            'following': [],
+           'photoUrl' : photoUrl,
         });
 
         res= "success";
       }
-    } catch(err){
+    } on FirebaseAuthException catch(err){
+      if(err.code == 'invalid-email'){
+        res = 'Enter a valid email id';
+      }
+
+    }
+      
+    catch(err){
       res = err.toString();
     }
     return res;
   }
-}
+
+  Future<String>loginUser({
+    required String email,
+    required String password,
+  }) async{
+   String res = "Some Error Occured.";
+    try{
+      if(email.isNotEmpty || password.isNotEmpty){
+        await _auth.signInWithEmailAndPassword(email: email, password: password);
+        res = "success";
+      }
+      else{
+        res = "Enter all the fields";
+      }
+    }catch(err){
+      res = err.toString();
+
+    }
+    return res;
+  }
+ }
