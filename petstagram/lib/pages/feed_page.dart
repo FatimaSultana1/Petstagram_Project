@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:petstagram/utils/colors.dart';
+import 'package:petstagram/widgets/post_card.dart';
 
 class FeedPage extends StatelessWidget {
   const FeedPage({super.key});
@@ -27,8 +28,7 @@ class FeedPage extends StatelessWidget {
               ],
             ),
 
-
-
+            body: const PostCard(),
     
     );
   }
