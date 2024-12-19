@@ -72,7 +72,7 @@ class AuthMethods {
       res = err.toString();
 
     }
-    return res;
+    return res; // Reteun statement
   }
   Future<void> signOut() async {
     await _auth.signOut();
