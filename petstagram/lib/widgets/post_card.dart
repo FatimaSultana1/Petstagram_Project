@@ -7,6 +7,7 @@ import 'package:petstagram/providers/user_provider.dart';
 import 'package:petstagram/resources/firestore_methods.dart';
 // import 'package:petstagram/providers/user_provider.dart';
 import 'package:petstagram/utils/colors.dart';
+import 'package:petstagram/utils/global_vars.dart';
 import 'package:petstagram/utils/utils.dart';
 import 'package:petstagram/widgets/like_animation.dart';
 import 'package:provider/provider.dart';
@@ -28,6 +29,7 @@ class _PostCardState  extends State<PostCard> {
   bool isLikeAnimating = false;
   int commentLen = 0;
 
+  @override
   void initState(){
     super.initState();
     getComments();
@@ -46,9 +48,16 @@ class _PostCardState  extends State<PostCard> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    
     final model.User user = Provider.of<UserProvider>(context).getUser;
     return Container( 
-      color: mobileBackgroundColor,
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: width > webScreenSize ? secondaryColor : mobileBackgroundColor,
+        ),
+        color: mobileBackgroundColor,
+      ),
       padding: const EdgeInsets.symmetric(
         vertical: 10
       ),

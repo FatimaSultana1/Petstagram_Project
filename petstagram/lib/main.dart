@@ -3,7 +3,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:petstagram/pages/login_page.dart';
-import 'package:petstagram/pages/login_page.dart';
 import 'package:petstagram/pages/signup_page.dart';
 import 'package:petstagram/providers/user_provider.dart';
 import 'package:petstagram/responses/mobile_screen.dart';
@@ -47,7 +46,7 @@ class MyApp extends StatelessWidget {
       builder: (context, snapshot){
         if(snapshot.connectionState == ConnectionState.active){
           if(snapshot.hasData){
-             return const ResponsiveLayout(webScreenLayout: WebScreenLayout(), mobileScreenLayout: MobileScreenLayout());
+             return const ResponsiveLayout(webScreenLayout: WebScreenLayout(), mobileScreenLayout: MobileScreenLayout(),);
           }else if(snapshot.hasError){
             return Center(
               child : Text('${snapshot.error}'),

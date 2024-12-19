@@ -4,6 +4,7 @@ import 'package:petstagram/resources/auth_methods.dart';
 import 'package:petstagram/responses/mobile_screen.dart';
 import 'package:petstagram/responses/reponsive_layout.dart';
 import 'package:petstagram/responses/web_screen.dart';
+import 'package:petstagram/utils/global_vars.dart';
 import 'package:petstagram/utils/utils.dart';
 // import 'package:petstagram/utils/colors.dart';
 import 'package:petstagram/widgets/text_field_input.dart';
@@ -66,12 +67,13 @@ class _LoginPageState extends State<LoginPage> {
               fit: BoxFit.cover,
             ),
           ),
-        padding: const EdgeInsets.symmetric(horizontal: 32),
+        padding: MediaQuery.of(context).size.width > webScreenSize?  EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width/3):
+        const EdgeInsets.symmetric(horizontal: 32),
         width: double.infinity,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-                          Flexible(
+              Flexible(
                 flex: 2,
                 child: Container(),
               ),
