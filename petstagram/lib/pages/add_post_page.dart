@@ -107,13 +107,36 @@ class _AddPostPageState extends State<AddPostPage> {
 
     final User user = Provider.of<UserProvider>(context).getUser;
 
-
-    return  _file == null ?Center(
-      child: IconButton(
-        icon: const Icon(Icons.upload),
-        onPressed: () => _selectImage(context),),
-    ):
-
+      return _file == null
+      ? Center(
+        
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+              'assets/images/pet.png', // Path to your image asset
+              height: 100, // Adjust size as needed
+              width: 100,
+            ),
+            const SizedBox(height: 20),
+              IconButton(
+                icon: const Icon(Icons.upload, size: 50, color: Colors.grey),
+                onPressed: () => _selectImage(context),
+              ),
+              const SizedBox(height: 10), // Space between icon and text
+              const Text(
+                'Hey Pet Owner! Want to share something about your pet?',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.grey,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        )
+      : 
      Scaffold(
 
       appBar: AppBar(

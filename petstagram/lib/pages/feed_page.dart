@@ -20,7 +20,8 @@ class FeedPage extends StatelessWidget {
               title: Image.asset(
                 'assets/images/pet.png',
                 // color: primaryColor,
-                height: 32,
+                height: 50,
+                width: 80,
               ),
               actions: [
                 IconButton(
