@@ -52,12 +52,7 @@ class _PostCardState  extends State<PostCard> {
     
     final model.User user = Provider.of<UserProvider>(context).getUser;
     return Container( 
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: width > webScreenSize ? secondaryColor : mobileBackgroundColor,
-        ),
-        color: mobileBackgroundColor,
-      ),
+      color: width > webScreenSize? secondaryColor : mobileBackgroundColor,
       padding: const EdgeInsets.symmetric(
         vertical: 10
       ),
