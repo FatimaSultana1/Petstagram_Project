@@ -40,8 +40,30 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Petstagram',
-      theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: mobileBackgroundColor) ,
+      // theme: ThemeData.dark().copyWith(
+      //   scaffoldBackgroundColor: mobileBackgroundColor
+        
+      //   ) ,
+
+      theme: ThemeData(
+          brightness: Brightness.light, // Optional: Use light mode
+          scaffoldBackgroundColor: mobileBackgroundColor,
+          primaryColor: Colors.black, // Black as the primary color
+          textTheme: const TextTheme(
+            bodyMedium: TextStyle(
+              color: Colors.black, // Default text color for medium text
+            ),
+            bodyLarge: TextStyle(
+              color: Colors.black, // Default text color for large text
+            ),
+            bodySmall: TextStyle(
+              color: Colors.black, // Default text color for small text
+            ),
+          ),
+          iconTheme: const IconThemeData(
+            color: secondaryColor, // Default icon color
+          ),
+        ),
       home : StreamBuilder(stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot){
         if(snapshot.connectionState == ConnectionState.active){

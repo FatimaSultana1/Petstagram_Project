@@ -13,8 +13,8 @@ class FeedPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: width > webScreenSize? webBackgroundColor : mobileBackgroundColor,
-      appBar: width > webScreenSize ? null : AppBar(
+      backgroundColor:  mobileBackgroundColor,
+      appBar: AppBar(
               backgroundColor: mobileBackgroundColor,
               centerTitle: false,
               title: Image.asset(

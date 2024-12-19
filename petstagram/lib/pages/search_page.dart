@@ -11,7 +11,10 @@ class SearchPage extends StatefulWidget {
   State<SearchPage> createState() => _SearchPageState();
 }
 
-class _SearchPageState extends State<SearchPage> {
+class _SearchPageState extends State<SearchPage>
+
+
+ {
   final TextEditingController searchController = TextEditingController();
   bool isShowUsers = false;
 
@@ -56,11 +59,11 @@ class _SearchPageState extends State<SearchPage> {
               return InkWell(
                 onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context)=> ProfilePage(uid: (snapshot.data! as dynamic).docs[index]['uid'],),),),
                 child: ListTile(
-                  leading: CircleAvatar(
-                    backgroundImage: NetworkImage(
-                      (snapshot.data! as dynamic).docs[index]['photoUrl']
-                    ),
-                  ),
+                  // leading: CircleAvatar(
+                  //   backgroundImage: NetworkImage(
+                  //     // (snapshot.data! as dynamic).docs[index]['photoUrl']
+                  //   ),
+                  // ),
                   title: Text((snapshot.data! as dynamic).docs[index]['username'],),
                 ),
               );
