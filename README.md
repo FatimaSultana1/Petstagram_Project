@@ -46,25 +46,25 @@ Petstagram is a social media mobile application inspired by Instagram, designed 
 ## 📸 App Screenshots
 
 ### Login Screen
-![Login](login.png)
+![Login](/images/login.png)
 
 ### Sign Up Screen
-![Signup](signup.png)
+![Signup](/images/signup.png)
 
 ### Profile Page
-![Profile](profile.png)
+![Profile](/images/profile.png)
 
 ### Feed View
-![Feed](feed.png)
+![Feed](/images/feed.png)
 
 ### Comments Section
-![Comments](comments.png)
+![Comments](/images/comments.png)
 
 ### Create Post
-![Create Post](post.png)
+![Create Post](/images/post.png)
 
 ### Caption Entry
-![Caption](caption.png)
+![Caption](/images/caption.png)
 
 ---
 
